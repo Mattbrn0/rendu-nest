@@ -1,35 +1,23 @@
-# NestJS Authentication and Authorization Guide
+Script BDD 
 
-## Description
+-- Table des utilisateurs
+CREATE TABLE user (
+    id INT AUTO_INCREMENT PRIMARY KEY,  -- Utilisation de INT et AUTO_INCREMENT
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    admin BOOL DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
 
-This repository provides a comprehensive guide and codebase for implementing authentication and authorization processes in a [NestJS ](https://nestjs.com/)project using the [Passport](https://www.passportjs.org/) middleware module.
-Feel free to explore and enhance the codebase according to your project needs. Happy coding!
-Check the related article [here](https://www.sipios.com/blog-posts/implementing-authentication-in-nestjs-using-passport-and-jwt) 😊
-
-![image](https://github.com/sipios/tuto-authentication-nestjs/assets/129767301/50ef3c15-d4da-4eb9-ba9b-b196c84aa9e4)
-
-## Installation
-
-```bash
-$ npm install
-```
-
-## Running the app
-
-```bash
-# DB
-$ docker compose up -d
-
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Stay in touch
-
-- Author - [Camille Fauchier](https://www.linkedin.com/in/camille-fauchier/)
+-- Table des images
+CREATE TABLE images (
+    id INT AUTO_INCREMENT PRIMARY KEY,   -- Utilisation de INT et AUTO_INCREMENT
+    url VARCHAR(200),
+    signature VARCHAR(200),
+    description TEXT,
+    user_id INT,  -- FK vers la table "user"
+    -- Clé étrangère vers "user"
+    CONSTRAINT fk_user_id FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+);
